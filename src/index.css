@@ -1,0 +1,18 @@
+:root {
+  --text: #ffffff;
+  --bg: #1f1d2b;
+  --primary: #161421;
+  --secondary: #ea7c69;
+
+  --green: #50d1aa;
+  --pink: #ff7ca3;
+  --orange: #ffb572;
+  --blue: #9290fe;
+  --purple: #65b0f6;
+}
+
+body {
+  background-color: var(--bg);
+  display: flex;
+  justify-content: center;
+}
