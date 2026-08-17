@@ -20,23 +20,44 @@ function App() {
       task: "Clean the kitchen",
       date: "Aug 16",
       border: "--green",
+      completed: false,
+    },
+    {
+      task: "Take a walk",
+      date: "Aug 16",
+      border: "--purple",
+      completed: true,
+    },
+    {
+      task: "Vacum the house",
+      date: "Aug 16",
+      border: "--blue",
       completed: true,
     },
   ]);
+
+  let procent =
+    (tasks.filter((task) => task.completed).length / tasks.length) * 100;
+
+  const [activeTab, setActiveTab] = useState(false);
 
   return (
     <div className="container">
       <section className="task-container">
         <div>
           <h1>Daily Task</h1>
-          <p className="task-completed-text">2/5 Task Completed</p>
+          <p className="task-completed-text">
+            {" "}
+            {tasks.filter((task) => task.completed).length}/{tasks.length} Task
+            Completed
+          </p>
         </div>
         <div>
           <p className="bar-text">
-            You are almost done go ahead <span>40%</span>
+            You are almost done go ahead <span>{procent}%</span>
           </p>
           <div className="bar">
-            <div style={{ width: `40%` }}></div>
+            <div style={{ width: `${procent}%` }}></div>
           </div>
         </div>
       </section>
@@ -49,30 +70,42 @@ function App() {
       </section>
 
       <section className="task-state">
-        <button className="active-tab">Active (3)</button>
-        <button>Completed (2)</button>
+        <button
+          onClick={() => setActiveTab(false)}
+          className={activeTab ? "" : "active-tab"}
+        >
+          Active ({tasks.filter((task) => task.completed === false).length})
+        </button>
+        <button
+          onClick={() => setActiveTab(true)}
+          className={!activeTab ? "" : "active-tab"}
+        >
+          Completed ({tasks.filter((task) => task.completed).length})
+        </button>
       </section>
 
       <section className="task-list">
-        <h2>Todays task</h2>
-        <ul>
-          {tasks.map((item, index) => (
-            <li
-              key={index}
-              className="task"
-              style={{ borderColor: `var(${item.border})` }}
-            >
-              <div>
-                <p>{item.task}</p>
-                <p className="added-date">
-                  <MdCalendarMonth /> {item.date}
-                </p>
-              </div>
-              <button className="done-task flex-center">
-                <MdOutlineCheck fill="#ea7c69" />
-              </button>
-            </li>
-          ))}
+        <h2>{activeTab ? "Completed" : "Todays task"}</h2>
+        <ul className={activeTab ? "completed" : ""}>
+          {tasks
+            .filter((task) => task.completed === activeTab)
+            .map((item, index) => (
+              <li
+                key={index}
+                className="task"
+                style={{ borderColor: `var(${item.border})` }}
+              >
+                <div>
+                  <p className="task-text">{item.task}</p>
+                  <p className="added-date">
+                    <MdCalendarMonth /> {item.date}
+                  </p>
+                </div>
+                <button className="done-task-button flex-center">
+                  <MdOutlineCheck fill={activeTab ? "" : "#ea7c69"} />
+                </button>
+              </li>
+            ))}
         </ul>
       </section>
     </div>
