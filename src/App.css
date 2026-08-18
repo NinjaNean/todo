@@ -4,7 +4,8 @@
 }
 
 h1,
-h2 {
+h2,
+h3 {
   margin: 0;
 }
 
@@ -21,6 +22,19 @@ li {
   list-style: none;
 }
 
+input {
+  flex-grow: 1;
+  padding: 1rem;
+  border: 1px solid grey;
+  background-color: var(--primary);
+  border-radius: 0.5rem;
+
+  &:focus {
+    border-color: var(--secondary);
+    outline: none;
+  }
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -33,48 +47,40 @@ li {
   padding: 2rem;
   border-radius: 1rem;
   border: 2px dashed var(--secondary);
-}
 
-.task-completed-text {
-  color: grey;
-}
-
-.bar-text {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: grey;
-  margin-top: 2rem;
-
-  span {
-    color: var(--text);
-    font-size: 1.4rem;
+  .task-completed-text {
+    color: grey;
   }
-}
 
-.bar {
-  background-color: #ea7c6932;
-  height: 0.8rem;
-  border-radius: 50px;
+  .bar-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: grey;
+    margin-top: 2rem;
 
-  div {
-    background-color: var(--secondary);
+    span {
+      color: var(--text);
+      font-size: 1.4rem;
+    }
+  }
+
+  .bar {
+    background-color: #ea7c6932;
     height: 0.8rem;
     border-radius: 50px;
+
+    div {
+      background-color: var(--secondary);
+      height: 0.8rem;
+      border-radius: 50px;
+    }
   }
 }
 
 .add-task-container {
   display: flex;
   gap: 0.5rem;
-
-  input {
-    flex-grow: 1;
-    padding: 1rem;
-    border: 1px solid grey;
-    background-color: var(--primary);
-    border-radius: 0.5rem;
-  }
 
   button {
     background-color: var(--secondary);
@@ -83,6 +89,7 @@ li {
     font-size: 1.2rem;
     width: 50px;
     height: 50px;
+    cursor: pointer;
   }
 }
 
@@ -117,6 +124,27 @@ li {
   }
 }
 
+.no-task {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+
+  .check-mark {
+    background-color: #2d2b3d;
+    padding: 2rem;
+    border-radius: 100%;
+    aspect-ratio: 1/1;
+    width: fit-content;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 8px var(--primary);
+  }
+
+  .create-new-task-text {
+    color: grey;
+  }
+}
+
 .task {
   display: flex;
   justify-content: space-between;
@@ -126,52 +154,52 @@ li {
   border-radius: 1rem;
   background-color: var(--primary);
   margin-top: 1rem;
-}
 
-.task-text {
-  font-weight: bold;
-}
+  .task-text {
+    font-weight: bold;
+  }
 
-.added-date {
-  display: flex;
-  gap: 0.5rem;
-  opacity: 0.5;
-}
+  .added-date {
+    display: flex;
+    gap: 0.5rem;
+    opacity: 0.5;
+  }
 
-.task-buttons {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-}
+  .task-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
 
-.delete-task-button {
-  border: none;
-  background-color: transparent;
-  font-size: 1.5rem;
-  cursor: pointer;
+  .delete-task-button {
+    border: none;
+    background-color: transparent;
+    font-size: 1.2rem;
+    cursor: pointer;
 
-  opacity: 0;
-  visibility: hidden;
+    opacity: 0;
+    visibility: hidden;
 
-  transition:
-    opacity 0.3s ease-in,
-    visibility 0.3s ease-in;
-}
+    transition:
+      opacity 0.3s ease-in,
+      visibility 0.3s ease-in;
+  }
 
-.task:hover .delete-task-button {
-  opacity: 0.8;
-  visibility: visible;
-}
+  &:hover .delete-task-button {
+    opacity: 0.5;
+    visibility: visible;
+  }
 
-.done-task-button {
-  border: 2px solid var(--secondary);
-  background-color: #ea7c6932;
-  aspect-ratio: 1/1;
-  height: 40px;
-  color: var(--secondary);
-  border-radius: 50%;
-  font-size: 1.5rem;
-  cursor: pointer;
+  .done-task-button {
+    border: 2px solid var(--secondary);
+    background-color: #ea7c6932;
+    aspect-ratio: 1/1;
+    height: 40px;
+    color: var(--secondary);
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
 }
 
 .completed {
