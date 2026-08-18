@@ -138,6 +138,31 @@ li {
   opacity: 0.5;
 }
 
+.task-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.delete-task-button {
+  border: none;
+  background-color: transparent;
+  font-size: 1.5rem;
+  cursor: pointer;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity 0.3s ease-in,
+    visibility 0.3s ease-in;
+}
+
+.task:hover .delete-task-button {
+  opacity: 0.8;
+  visibility: visible;
+}
+
 .done-task-button {
   border: 2px solid var(--secondary);
   background-color: #ea7c6932;
