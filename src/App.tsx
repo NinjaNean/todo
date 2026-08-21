@@ -2,45 +2,18 @@ import { useState } from "react";
 import "./App.css";
 import { MdOutlineCalendarMonth } from "react-icons/md";
 import { BsCheck2Circle, BsTrash, BsPlusLg, BsCheckLg } from "react-icons/bs";
+import { useLocalStorage } from "usehooks-ts";
+
+interface Task {
+  id: string;
+  task: string;
+  date: string;
+  border: string;
+  completed: boolean;
+}
 
 function App() {
-  const [tasks, setTasks] = useState([
-    {
-      id: "3b241101-e2bb-4255-8caf-4136c566a964",
-      task: "Take out the trash",
-      date: "Aug 16",
-      border: "--pink",
-      completed: false,
-    },
-    {
-      id: "6ec0bd7f-11c0-43da-975e-2a8ad9ebae0b",
-      task: "Do the laundry",
-      date: "Aug 16",
-      border: "--orange",
-      completed: false,
-    },
-    {
-      id: "9c3c1e2b-7b08-410a-8bf8-21d1b9136c53",
-      task: "Clean the kitchen",
-      date: "Aug 16",
-      border: "--green",
-      completed: false,
-    },
-    {
-      id: "8c772c68-085e-4a61-9c60-f472851d7c37",
-      task: "Take a walk",
-      date: "Aug 16",
-      border: "--purple",
-      completed: true,
-    },
-    {
-      id: "10b7543c-62ae-4c7b-839c-46a4897f1f97",
-      task: "Vacum the house",
-      date: "Aug 16",
-      border: "--blue",
-      completed: true,
-    },
-  ]);
+  const [tasks, setTasks] = useLocalStorage<Task[]>("todo-key", []);
 
   const borderColors = ["--green", "--blue", "--pink", "--orange", "--purple"];
 
@@ -112,7 +85,7 @@ function App() {
         </div>
         <div>
           <p className="bar-text">
-            You are almost done go ahead <span>{procent}%</span>
+            You are almost done go ahead <span>{procent ? procent : 0}%</span>
           </p>
           <div className="bar">
             <div style={{ width: `${procent}%` }}></div>
