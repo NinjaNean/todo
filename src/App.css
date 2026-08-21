@@ -39,12 +39,17 @@ input {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  width: 500px;
+  max-width: 500px;
+
+  @media (max-width: 500px) {
+    margin: 0 1rem;
+    width: 330px;
+  }
 }
 
 .task-container {
   background-color: var(--primary);
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: 1rem;
   border: 2px dashed var(--secondary);
 
@@ -58,6 +63,7 @@ input {
     align-items: center;
     color: grey;
     margin-top: 2rem;
+    gap: 2rem;
 
     span {
       color: var(--text);
