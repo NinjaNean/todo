@@ -1,10 +1,10 @@
 import { useState } from "react";
 import "./App.css";
-import { MdOutlineCalendarMonth } from "react-icons/md";
-import { BsCheck2Circle, BsTrash, BsPlusLg, BsCheckLg } from "react-icons/bs";
+import { BsCheck2Circle, BsPlusLg } from "react-icons/bs";
 import { useLocalStorage } from "usehooks-ts";
+import Task from "./components/Task";
 
-interface Task {
+export interface ITask {
   id: string;
   task: string;
   date: string;
@@ -13,7 +13,7 @@ interface Task {
 }
 
 function App() {
-  const [tasks, setTasks] = useLocalStorage<Task[]>("todo-key", []);
+  const [tasks, setTasks] = useLocalStorage<ITask[]>("todo-key", []);
 
   const borderColors = ["--green", "--blue", "--pink", "--orange", "--purple"];
 
@@ -143,32 +143,12 @@ function App() {
             {tasks
               .filter((task) => task.completed === activeTab)
               .map((item) => (
-                <li
-                  key={item.id}
-                  className="task"
-                  style={{ borderColor: `var(${item.border})` }}
-                >
-                  <div>
-                    <p className="task-text">{item.task}</p>
-                    <p className="added-date">
-                      <MdOutlineCalendarMonth /> {item.date}
-                    </p>
-                  </div>
-                  <div className="task-buttons ">
-                    <button
-                      onClick={() => deleteTask(item.id)}
-                      className="delete-task-button flex-center"
-                    >
-                      <BsTrash />
-                    </button>
-                    <button
-                      onClick={() => handleTask(item.id)}
-                      className="done-task-button flex-center"
-                    >
-                      <BsCheckLg fill={activeTab ? "" : "#ea7c69"} />
-                    </button>
-                  </div>
-                </li>
+                <Task
+                  item={item}
+                  activeTab={activeTab}
+                  onHandleTask={handleTask}
+                  onDeleteTask={deleteTask}
+                />
               ))}
           </ul>
         )}
