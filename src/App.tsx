@@ -3,6 +3,7 @@ import "./App.css";
 import { BsCheck2Circle, BsPlusLg } from "react-icons/bs";
 import { useLocalStorage } from "usehooks-ts";
 import Task from "./components/Task";
+import Calender from "./components/Calender";
 
 export interface ITask {
   id: string;
@@ -74,11 +75,12 @@ function App() {
 
   return (
     <div className="container">
+      <Calender />
+
       <section className="task-container">
         <div>
           <h1>Daily Task</h1>
           <p className="task-completed-text">
-            {" "}
             {tasks.filter((task) => task.completed).length}/{tasks.length} Task
             Completed
           </p>
