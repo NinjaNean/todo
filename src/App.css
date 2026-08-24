@@ -39,7 +39,7 @@ input {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  max-width: 500px;
+  width: 500px;
 
   @media (max-width: 500px) {
     margin: 0 1rem;

@@ -85,7 +85,10 @@ function App() {
         </div>
         <div>
           <p className="bar-text">
-            You are almost done go ahead <span>{procent ? procent : 0}%</span>
+            {procent === 100
+              ? "All done - nice work!"
+              : "You are almost done go ahead"}{" "}
+            <span>{procent ? procent : 0}%</span>
           </p>
           <div className="bar">
             <div style={{ width: `${procent}%` }}></div>
@@ -130,7 +133,9 @@ function App() {
             </div>
             <h3>No tasks left!</h3>
             <p className="create-new-task-text">
-              Create a new task to get started
+              {activeTab
+                ? "No completed tasks for this day yet."
+                : "Nothing left for this day. Add a task above."}
             </p>
           </div>
         ) : (
