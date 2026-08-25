@@ -49,7 +49,11 @@ function Calender() {
 
         <DatePicker
           selected={selectedDate}
-          onChange={(date: Date | null) => setSelectedDate(date)}
+          onChange={(date: Date | null) => {
+            if (date) {
+              setSelectedDate(date);
+            }
+          }}
           dateFormat="MMMM, yyyy"
           showIcon
         />
