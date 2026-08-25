@@ -11,15 +11,19 @@
     align-items: center;
     width: 90%;
 
+    svg {
+      flex-grow: 1;
+      cursor: pointer;
+    }
+
     .react-datepicker__input-container {
       display: flex;
       align-items: center;
-    }
 
-    svg {
-      fill: var(--secondary);
-      position: relative !important;
-      flex-grow: 1;
+      svg {
+        fill: var(--secondary);
+        position: relative !important;
+      }
     }
 
     input {
@@ -29,6 +33,10 @@
       caret-color: transparent;
       width: 100px;
       text-align: center;
+    }
+
+    .react-datepicker__triangle {
+      display: none;
     }
   }
 
