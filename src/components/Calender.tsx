@@ -1,8 +1,24 @@
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Calender.css";
 import { addDays, format, isSameDay, startOfWeek } from "date-fns";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+
+type CustomInputProps = {
+  className?: string;
+  value?: string;
+  onClick?: () => void;
+};
+
+// const CustomInput = forwardRef<CustomInputProps>(
+//   ({ value, onClick, className }, ref) => (
+//     <button type="button" className={className} onClick={onClick} ref={ref}>
+//       {value || "Välj datum"}
+//     </button>
+//   ),
+// );
+// CustomInput.displayName = "CustomInput";
 
 function Calender() {
   const [startDate, setStartDate] = useState(new Date());
@@ -18,13 +34,19 @@ function Calender() {
 
   return (
     <div className="date-container">
-      <DatePicker
-        selected={startDate}
-        onChange={(date) => setStartDate(date)}
-        dateFormat="MMMM, yyyy"
-        className="month"
-        showIcon
-      />
+      <div className="month-carousel">
+        <IoIosArrowBack />
+
+        <DatePicker
+          selected={startDate}
+          onChange={(date) => setStartDate(date)}
+          dateFormat="MMMM, yyyy"
+          showIcon
+          // customInput={<CustomInput className="custom-input" />}
+        />
+
+        <IoIosArrowForward />
+      </div>
 
       <div className="week-carousel">
         {weekDays.map((w, index) => {
