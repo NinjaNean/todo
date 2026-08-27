@@ -28,6 +28,12 @@ function App() {
     isSameDay(task.date, selectedDate),
   );
 
+  const noActiveTasks =
+    !activeTab && selectedTasks.filter((task) => !task.completed).length === 0;
+
+  const noCompletedTasks =
+    activeTab && selectedTasks.filter((task) => task.completed).length === 0;
+
   const procent = Math.round(
     (selectedTasks.filter((task) => task.completed).length /
       selectedTasks.length) *
@@ -143,7 +149,7 @@ function App() {
 
       <section>
         <h2>{activeTab ? "Completed" : "Todays task"}</h2>
-        {selectedTasks.length === 0 ? (
+        {noCompletedTasks || noActiveTasks ? (
           <div className="no-task">
             <div className="check-mark flex-center">
               <BsCheck2Circle size={`5rem`} fill="#ea7c69" />
