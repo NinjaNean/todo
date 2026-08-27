@@ -11,20 +11,27 @@ import {
   subWeeks,
 } from "date-fns";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import type { ITask } from "../App";
+import { useLocalStorage } from "usehooks-ts";
 
 type CalenderProps = {
   onSelectDate: (date: Date) => void;
 };
 
 function Calender({ onSelectDate }: CalenderProps) {
+  const [tasks, setTasks] = useLocalStorage<ITask[]>("todo-key", []);
+
   const [selectedDate, setSelectedDate] = useState(new Date());
+
   const startOfCurrentWeek = startOfWeek(selectedDate, { weekStartsOn: 1 });
+
   const weekDays = Array.from({ length: 7 }).map((_, index) => {
     const dayDate = addDays(startOfCurrentWeek, index);
     return {
       dayName: format(dayDate, "EEEEE"), // M, T, O...
       dayNumber: format(dayDate, "d"), // 25
       date: dayDate,
+      dot: tasks.some((task) => isSameDay(task.date, dayDate)),
     };
   });
 
@@ -76,6 +83,7 @@ function Calender({ onSelectDate }: CalenderProps) {
             >
               <p>{w.dayName}</p>
               <p>{w.dayNumber}</p>
+              <div className={w.dot ? "dot" : ""}></div>
             </div>
           );
         })}

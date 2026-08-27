@@ -55,11 +55,22 @@
       padding: 0.5rem;
       border-radius: 0.5rem;
 
+      .dot {
+        aspect-ratio: 1/1;
+        height: 5px;
+        background-color: var(--secondary);
+        border-radius: 50px;
+      }
+
       &.active {
         background-color: var(--secondary);
 
         p {
           color: black;
+        }
+
+        .dot {
+          background-color: black;
         }
       }
 
