@@ -65,7 +65,7 @@ function Calender({ onSelectDate }: CalenderProps) {
           selected={selectedDate}
           onChange={(date: Date | null) => {
             if (date) {
-              setSelectedDate(date);
+              handleDateChange(date);
             }
           }}
           dateFormat="MMMM, yyyy"

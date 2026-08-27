@@ -103,7 +103,11 @@ function App() {
             <span>{procent ? procent : 0}%</span>
           </p>
           <div className="bar">
-            <div style={{ width: `${procent}%` }}></div>
+            <div
+              style={{
+                width: `${selectedTasks.length > 0 ? procent : 0}%`,
+              }}
+            ></div>
           </div>
         </div>
       </section>
