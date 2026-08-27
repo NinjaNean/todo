@@ -16,16 +16,22 @@ export interface ITask {
 function App() {
   const [tasks, setTasks] = useLocalStorage<ITask[]>("todo-key", []);
 
-  const borderColors = ["--green", "--blue", "--pink", "--orange", "--purple"];
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
   const [activeTab, setActiveTab] = useState(false);
 
   const [addTask, setAddTask] = useState("");
 
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const borderColors = ["--green", "--blue", "--pink", "--orange", "--purple"];
+
+  const selectedTasks = tasks.filter((task) =>
+    isSameDay(task.date, selectedDate),
+  );
 
   const procent = Math.round(
-    (tasks.filter((task) => task.completed).length / tasks.length) * 100,
+    (selectedTasks.filter((task) => task.completed).length /
+      selectedTasks.length) *
+      100,
   );
 
   function handleTask(id: string | number) {
@@ -89,8 +95,8 @@ function App() {
         <div>
           <h1>Daily Task</h1>
           <p className="task-completed-text">
-            {tasks.filter((task) => task.completed).length}/{tasks.length} Task
-            Completed
+            {selectedTasks.filter((task) => task.completed).length}/
+            {selectedTasks.length} Task Completed
           </p>
         </div>
         <div>
@@ -124,19 +130,20 @@ function App() {
           onClick={() => setActiveTab(false)}
           className={activeTab ? "" : "active-tab"}
         >
-          Active ({tasks.filter((task) => task.completed === false).length})
+          Active (
+          {selectedTasks.filter((task) => task.completed === false).length})
         </button>
         <button
           onClick={() => setActiveTab(true)}
           className={!activeTab ? "" : "active-tab"}
         >
-          Completed ({tasks.filter((task) => task.completed).length})
+          Completed ({selectedTasks.filter((task) => task.completed).length})
         </button>
       </section>
 
       <section>
         <h2>{activeTab ? "Completed" : "Todays task"}</h2>
-        {tasks.length === 0 ? (
+        {selectedTasks.length === 0 ? (
           <div className="no-task">
             <div className="check-mark flex-center">
               <BsCheck2Circle size={`5rem`} fill="#ea7c69" />
@@ -150,12 +157,8 @@ function App() {
           </div>
         ) : (
           <ul className={activeTab ? "completed" : ""}>
-            {tasks
-              .filter(
-                (task) =>
-                  task.completed === activeTab &&
-                  isSameDay(task.date, selectedDate),
-              )
+            {selectedTasks
+              .filter((task) => task.completed === activeTab)
               .map((item) => (
                 <Task
                   item={item}
