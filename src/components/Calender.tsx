@@ -72,6 +72,7 @@ function Calender({ onSelectDate }: CalenderProps) {
           showIcon
           highlightDates={taskDates}
           showPopperArrow={false}
+          onFocus={(e) => e.target.blur()}
         />
 
         <IoIosArrowForward onClick={handleNextWeek} />
