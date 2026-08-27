@@ -19,11 +19,13 @@ type CalenderProps = {
 };
 
 function Calender({ onSelectDate }: CalenderProps) {
-  const [tasks, setTasks] = useLocalStorage<ITask[]>("todo-key", []);
+  const [tasks, _] = useLocalStorage<ITask[]>("todo-key", []);
 
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const startOfCurrentWeek = startOfWeek(selectedDate, { weekStartsOn: 1 });
+
+  const today = new Date();
 
   const weekDays = Array.from({ length: 7 }).map((_, index) => {
     const dayDate = addDays(startOfCurrentWeek, index);
@@ -31,7 +33,7 @@ function Calender({ onSelectDate }: CalenderProps) {
       dayName: format(dayDate, "EEEEE"), // M, T, O...
       dayNumber: format(dayDate, "d"), // 25
       date: dayDate,
-      dot: tasks.some((task) => isSameDay(task.date, dayDate)),
+      dot: tasks.some((task) => isSameDay(task.date, dayDate)), //Boolean
     };
   });
 
@@ -52,6 +54,8 @@ function Calender({ onSelectDate }: CalenderProps) {
     onSelectDate(date);
   }
 
+  const taskDates = tasks.map((task) => new Date(task.date));
+
   return (
     <div className="date-container">
       <div className="month-carousel">
@@ -66,6 +70,8 @@ function Calender({ onSelectDate }: CalenderProps) {
           }}
           dateFormat="MMMM, yyyy"
           showIcon
+          highlightDates={taskDates}
+          showPopperArrow={false}
         />
 
         <IoIosArrowForward onClick={handleNextWeek} />
@@ -77,13 +83,13 @@ function Calender({ onSelectDate }: CalenderProps) {
 
           return (
             <div
-              className={`day ${isSelected ? "active" : ""}`}
+              className={`day ${isSelected ? "active" : ""} ${isSameDay(today, w.date) ? "today" : ""}`}
               key={index}
               onClick={() => handleDateChange(w.date)}
             >
-              <p>{w.dayName}</p>
-              <p>{w.dayNumber}</p>
-              <div className={w.dot ? "dot" : ""}></div>
+              <p className="week-day">{w.dayName}</p>
+              <p className="day-number">{w.dayNumber}</p>
+              <div className={w.dot ? "dot" : "no-dot"}></div>
             </div>
           );
         })}
