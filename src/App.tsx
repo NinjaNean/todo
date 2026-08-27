@@ -8,7 +8,7 @@ import Calender from "./components/Calender";
 export interface ITask {
   id: string;
   task: string;
-  date: string;
+  date: Date;
   border: string;
   completed: boolean;
 }
@@ -22,14 +22,11 @@ function App() {
 
   const [addTask, setAddTask] = useState("");
 
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+
   const procent = Math.round(
     (tasks.filter((task) => task.completed).length / tasks.length) * 100,
   );
-
-  const today = new Date().toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-  });
 
   function handleTask(id: string | number) {
     let task = tasks.find((task) => task.id === id);
@@ -63,7 +60,7 @@ function App() {
           id: id,
           completed: false,
           task: addTask.charAt(0).toUpperCase() + addTask.slice(1),
-          date: today,
+          date: selectedDate,
           border: borderColors[Math.floor(Math.random() * borderColors.length)],
         },
       ]);
@@ -73,9 +70,20 @@ function App() {
     }
   }
 
+  function isSameDay(taskDate: Date | string, selectedDate: Date): boolean {
+    if (!taskDate || !selectedDate) return false;
+
+    const d1 = new Date(taskDate);
+    const d2 = new Date(selectedDate);
+
+    if (isNaN(d1.getTime()) || isNaN(d2.getTime())) return false;
+
+    return d1.toDateString() === d2.toDateString();
+  }
+
   return (
     <div className="container">
-      <Calender />
+      <Calender onSelectDate={(date) => setSelectedDate(date)} />
 
       <section className="task-container">
         <div>
@@ -143,7 +151,11 @@ function App() {
         ) : (
           <ul className={activeTab ? "completed" : ""}>
             {tasks
-              .filter((task) => task.completed === activeTab)
+              .filter(
+                (task) =>
+                  task.completed === activeTab &&
+                  isSameDay(task.date, selectedDate),
+              )
               .map((item) => (
                 <Task
                   item={item}

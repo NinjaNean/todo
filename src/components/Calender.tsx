@@ -1,4 +1,4 @@
-import { forwardRef, useState } from "react";
+import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Calender.css";
@@ -12,13 +12,11 @@ import {
 } from "date-fns";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
-type CustomInputProps = {
-  className?: string;
-  value?: string;
-  onClick?: () => void;
+type CalenderProps = {
+  onSelectDate: (date: Date) => void;
 };
 
-function Calender() {
+function Calender({ onSelectDate }: CalenderProps) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const startOfCurrentWeek = startOfWeek(selectedDate, { weekStartsOn: 1 });
   const weekDays = Array.from({ length: 7 }).map((_, index) => {
@@ -41,6 +39,11 @@ function Calender() {
       setSelectedDate(addWeeks(selectedDate, 1));
     }
   };
+
+  function handleDateChange(date: Date) {
+    setSelectedDate(date);
+    onSelectDate(date);
+  }
 
   return (
     <div className="date-container">
@@ -69,7 +72,7 @@ function Calender() {
             <div
               className={`day ${isSelected ? "active" : ""}`}
               key={index}
-              onClick={() => setSelectedDate(w.date)}
+              onClick={() => handleDateChange(w.date)}
             >
               <p>{w.dayName}</p>
               <p>{w.dayNumber}</p>

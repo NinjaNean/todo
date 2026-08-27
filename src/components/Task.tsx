@@ -10,6 +10,12 @@ interface TaskProps {
 }
 
 function Task({ item, activeTab, onHandleTask, onDeleteTask }: TaskProps) {
+  const date = new Date(item.date);
+  const dateString = date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+
   return (
     <li
       key={item.id}
@@ -19,7 +25,7 @@ function Task({ item, activeTab, onHandleTask, onDeleteTask }: TaskProps) {
       <div>
         <p className="task-text">{item.task}</p>
         <p className="added-date">
-          <MdOutlineCalendarMonth /> {item.date}
+          <MdOutlineCalendarMonth /> {dateString}
         </p>
       </div>
       <div className="task-buttons ">
